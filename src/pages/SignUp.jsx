@@ -26,10 +26,11 @@ export const SignUp = () => {
     const data = {
       email: email,
       name: name,
-      password: password
+      password: password,
     };
 
-    axios.post(`${url}/users`, data)
+    axios
+      .post(`${url}/users`, data)
       .then((res) => {
         const token = res.data.token;
         dispatch(signIn());
@@ -39,11 +40,11 @@ export const SignUp = () => {
       })
       .catch((err) => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`);
-      })
+      });
 
-      // if(auth) return <Redirect to="/" />
-      if(auth) return <Navigate to="/" replace />
-  }
+    // if(auth) return <Redirect to="/" />
+    if (auth) return <Navigate to="/" replace />;
+  };
   return (
     <div>
       <Header />
@@ -51,15 +52,35 @@ export const SignUp = () => {
         <h2>新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="signup-form">
-          <label>メールアドレス</label><br />
-          <input type="email" onChange={handleEmailChange} className="email-input" /><br />
-          <label>ユーザ名</label><br />
-          <input type="text" onChange={handleNameChange} className="name-input" /><br />
-          <label>パスワード</label><br />
-          <input type="password" onChange={handlePasswordChange} className="password-input" /><br />
-          <button type="button" onClick={onSignUp} className="signup-button">作成</button>
+          <label>メールアドレス</label>
+          <br />
+          <input
+            type="email"
+            onChange={handleEmailChange}
+            className="email-input"
+          />
+          <br />
+          <label>ユーザ名</label>
+          <br />
+          <input
+            type="text"
+            onChange={handleNameChange}
+            className="name-input"
+          />
+          <br />
+          <label>パスワード</label>
+          <br />
+          <input
+            type="password"
+            onChange={handlePasswordChange}
+            className="password-input"
+          />
+          <br />
+          <button type="button" onClick={onSignUp} className="signup-button">
+            作成
+          </button>
         </form>
       </main>
     </div>
-  )
-}
+  );
+};
