@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
-import "./home.css";
+import "./home.scss";
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
@@ -13,18 +13,18 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
-  const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+  const handleIsDoneDisplayChange = e => setIsDoneDisplay(e.target.value);
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
-      .then((res) => {
+      .then(res => {
         setLists(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
       });
   }, []);
@@ -36,30 +36,30 @@ export const Home = () => {
       axios
         .get(`${url}/lists/${listId}/tasks`, {
           headers: {
-            authorization: `Bearer ${cookies.token}`,
-          },
+            authorization: `Bearer ${cookies.token}`
+          }
         })
-        .then((res) => {
+        .then(res => {
           setTasks(res.data.tasks);
         })
-        .catch((err) => {
+        .catch(err => {
           setErrorMessage(`タスクの取得に失敗しました。${err}`);
         });
     }
   }, [lists]);
 
-  const handleSelectList = (id) => {
+  const handleSelectList = id => {
     setSelectListId(id);
     axios
       .get(`${url}/lists/${id}/tasks`, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
-      .then((res) => {
+      .then(res => {
         setTasks(res.data.tasks);
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       });
   };
@@ -123,7 +123,7 @@ export const Home = () => {
 };
 
 // 表示するタスク
-const Tasks = (props) => {
+const Tasks = props => {
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return <></>;
 
@@ -131,7 +131,7 @@ const Tasks = (props) => {
     return (
       <ul>
         {tasks
-          .filter((task) => {
+          .filter(task => {
             return task.done === true;
           })
           .map((task, key) => (
@@ -153,7 +153,7 @@ const Tasks = (props) => {
   return (
     <ul>
       {tasks
-        .filter((task) => {
+        .filter(task => {
           return task.done === false;
         })
         .map((task, key) => (

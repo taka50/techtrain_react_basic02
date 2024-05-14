@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { url } from "../const";
-import "./editList.css";
+import "./editList.scss";
 
 export const EditList = () => {
   // const history = useHistory();
@@ -14,23 +14,23 @@ export const EditList = () => {
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
-  const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleTitleChange = e => setTitle(e.target.value);
   const onUpdateList = () => {
     const data = {
-      title: title,
+      title: title
     };
 
     axios
       .put(`${url}/lists/${listId}`, data, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
       .then(() => {
         // history.push("/");
         navigate("/");
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`更新に失敗しました。 ${err}`);
       });
   };
@@ -39,14 +39,14 @@ export const EditList = () => {
     axios
       .delete(`${url}/lists/${listId}`, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
       .then(() => {
         // history.push("/");
         navigate("/");
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`削除に失敗しました。${err}`);
       });
   };
@@ -55,14 +55,14 @@ export const EditList = () => {
     axios
       .get(`${url}/lists/${listId}`, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
-      .then((res) => {
+      .then(res => {
         const list = res.data;
         setTitle(list.title);
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`リスト情報の取得に失敗しました。${err}`);
       });
   }, []);

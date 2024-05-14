@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { url } from "../const";
 import { Header } from "../components/Header";
-import "./newTask.css";
+import "./newTask.scss";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -16,27 +16,27 @@ export const NewTask = () => {
   const [cookies] = useCookies();
   // const history = useHistory();
   const navigate = useNavigate();
-  const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleDetailChange = (e) => setDetail(e.target.value);
-  const handleSelectList = (id) => setSelectListId(id);
+  const handleTitleChange = e => setTitle(e.target.value);
+  const handleDetailChange = e => setDetail(e.target.value);
+  const handleSelectList = id => setSelectListId(id);
   const onCreateTask = () => {
     const data = {
       title: title,
       detail: detail,
-      done: false,
+      done: false
     };
 
     axios
       .post(`${url}/lists/${selectListId}/tasks`, data, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
       .then(() => {
         // history.push("/");
         navigate("/");
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`タスクの作成に失敗しました。${err}`);
       });
   };
@@ -45,14 +45,14 @@ export const NewTask = () => {
     axios
       .get(`${url}/lists`, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
-      .then((res) => {
+      .then(res => {
         setLists(res.data);
         setSelectListId(res.data[0]?.id);
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
       });
   }, []);
@@ -67,7 +67,7 @@ export const NewTask = () => {
           <label>リスト</label>
           <br />
           <select
-            onChange={(e) => handleSelectList(e.target.value)}
+            onChange={e => handleSelectList(e.target.value)}
             className="new-task-select-list"
           >
             {lists.map((list, key) => (

@@ -5,7 +5,7 @@ import { Header } from "../components/Header";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { url } from "../const";
-import "./newList.css";
+import "./newList.scss";
 
 export const NewList = () => {
   const [cookies] = useCookies();
@@ -13,23 +13,23 @@ export const NewList = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleTitleChange = e => setTitle(e.target.value);
   const onCreateList = () => {
     const data = {
-      title: title,
+      title: title
     };
 
     axios
       .post(`${url}/lists`, data, {
         headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
+          authorization: `Bearer ${cookies.token}`
+        }
       })
       .then(() => {
         // history.push("/");
         navigate("/");
       })
-      .catch((err) => {
+      .catch(err => {
         setErrorMessage(`リストの作成に失敗しました。${err}`);
       });
   };
